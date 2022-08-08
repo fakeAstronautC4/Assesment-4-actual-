@@ -1,3 +1,8 @@
+const { request } = require("express");
+
+let fortunes = ['A faithful friend is a strong defense', 'A fresh start will put you on your way', 'A friend is a present you give yourself', 'A good time to finish old tasks', 'A pleasant surprise is waiting for you... you absolute CHAD'];
+// let fortunes = ['A faithful friend is a strong defense', 'A fresh start will put you on your way', 'A friend is a present you give yourself', 'A good time to finish old tasks', 'A pleasant surprise is waiting for you... you absolute CHAD'];
+        
 module.exports = {
 
     getCompliment: (req, res) => {
@@ -10,16 +15,26 @@ module.exports = {
         res.status(200).send(randomCompliment);
     },
     getFortune: (req, res) => {
-        const fortunes = ['A faithful friend is a strong defense', 'A fresh start will put you on your way', 'A friend is a present you give yourself', 'A good time to finish old tasks', 'A pleasant surprise is waiting for you... you absolute CHAD'];
-
         let randomInd = Math.floor(Math.random() * fortunes.length);
         let randomFortunes = fortunes[randomInd];
 
         res.status(200).send(randomFortunes);
     },
-    postWisdom: (req, res) => {
-     fortunes.push(req.body)
-     res.status(200).send('Thanks for sharing')
+    deleteFortune: (req, res) => {
+        if (fortunes.length > 0) { 
+            let index = Math.floor(Math.random() * fortunes.length);
+            let randomFortune = fortunes[index]
+            fortunes.splice(randomFortune, 1)
+            
+            res.status(200).send(randomFortune)} 
+        else{
+            res.status(400);
+        }
+    },   
+    postWisdom: (request, response) => {
+        let newfortune = request.body
+        fortunes.push(newfortune)
+     
+     response.status(200).send(('Thanks for sharing'))
     }
-    
 }
